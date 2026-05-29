@@ -1,0 +1,36 @@
+# ─── Render blueprint for DARKNODE BOT (multi-tenant WhatsApp host) ────────
+# Apply this once at https://dashboard.render.com/blueprints — it provisions the
+# web service, attaches a persistent disk for WhatsApp pairing credentials,
+# and pre-fills the env vars you need to set.
+services:
+  - type: web
+    name: darknode-bot
+    runtime: node
+    plan: starter           # starter or higher — required for the persistent disk
+    region: oregon          # change if you prefer (frankfurt, singapore, ohio, ...)
+    buildCommand: npm install --omit=dev=false
+    startCommand: npm start
+    healthCheckPath: /healthz
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 5000
+      # Postgres (Neon) — paste your full Neon pooled connection string
+      - key: DATABASE_URL
+        sync: false
+      # Clerk — get these from https://dashboard.clerk.com → API Keys
+      - key: CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      # OpenAI proxy used by the bot's AI commands (optional but recommended)
+      - key: AI_INTEGRATIONS_OPENAI_BASE_URL
+        sync: false
+      - key: AI_INTEGRATIONS_OPENAI_API_KEY
+        sync: false
+    disk:
+      name: darknode-data
+      mountPath: /opt/render/project/src/sessions
+      sizeGB: 1            # one GB easily fits hundreds of paired Baileys creds

@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>DARKNODE BOT — Host your WhatsApp bot</title>
+<link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <span class="logo">⚡</span>
+        <span><b>DARKNODE</b> BOT HOST</span>
+    </div>
+    <nav id="nav-area">
+        <span id="nav-user" class="hidden"></span>
+        <div id="user-button-mount"></div>
+        <button id="nav-signin" class="btn-ghost hidden">Sign in</button>
+        <button id="nav-signup" class="btn-primary hidden">Sign up</button>
+    </nav>
+</header>
+
+<main id="app">
+    <!-- ───────── Landing ───────── -->
+    <section id="view-landing" class="view hidden">
+        <div class="hero">
+            <h1>Host your own WhatsApp bot.</h1>
+            <p class="sub">Link your WhatsApp number, pick a prefix, get 600+ commands instantly. Each user is isolated — your prefix and settings never collide with anyone else's.</p>
+            <div class="cta-row">
+                <button class="btn-primary" data-clerk="signup">Create account</button>
+                <button class="btn-ghost" data-clerk="signin">Sign in</button>
+            </div>
+            <div class="stats">
+                <div class="stat"><b id="stat-users">—</b><span>users</span></div>
+                <div class="stat"><b id="stat-active">—</b><span>active bots</span></div>
+                <div class="stat"><b>652</b><span>commands</span></div>
+            </div>
+        </div>
+        <div class="features">
+            <div class="feature"><h3>🔒 Isolated sessions</h3><p>Each account gets its own WhatsApp socket and credential store.</p></div>
+            <div class="feature"><h3>⚙️ Custom prefix</h3><p>One user uses <code>.</code>, another uses <code>/</code>, another <code>!</code>. Zero interference.</p></div>
+            <div class="feature"><h3>🤖 652 commands</h3><p>AI chat &amp; image, downloaders, stickers, games, economy, group admin, and more.</p></div>
+            <div class="feature"><h3>👑 You're the owner</h3><p>The number you link is automatically the bot owner — full access to <code>ownermenu</code>.</p></div>
+        </div>
+    </section>
+
+    <!-- ───────── Auth screens — Clerk renders into these mounts ───────── -->
+    <section id="view-signup" class="view hidden">
+        <div class="card auth-card"><div id="clerk-signup-mount"></div></div>
+    </section>
+    <section id="view-login" class="view hidden">
+        <div class="card auth-card"><div id="clerk-signin-mount"></div></div>
+    </section>
+
+    <!-- ───────── Dashboard ───────── -->
+    <section id="view-dashboard" class="view hidden">
+        <h2>Your bot</h2>
+
+        <div class="card">
+            <div class="status-row">
+                <div>
+                    <div class="status-label">Status</div>
+                    <div id="status-pill" class="pill">offline</div>
+                </div>
+                <div>
+                    <div class="status-label">Phone</div>
+                    <div id="status-phone">—</div>
+                </div>
+                <div>
+                    <div class="status-label">Started</div>
+                    <div id="status-started">—</div>
+                </div>
+            </div>
+
+            <div id="link-section">
+                <h3>Link a WhatsApp number</h3>
+                <p class="muted">Enter the phone number you want to link. We'll generate an 8-character pairing code that you'll type into WhatsApp on that phone.</p>
+                <form id="form-link">
+                    <label>Phone number (international, digits only) <input name="phone" type="tel" placeholder="2547XXXXXXXX" pattern="[0-9+ ()-]+" required></label>
+                    <button class="btn-primary" type="submit">Get pairing code</button>
+                </form>
+                <div id="pairing-display" class="hidden">
+                    <p>On the linked phone open <b>WhatsApp → Settings → Linked Devices → Link a device → Link with phone number</b>, then enter:</p>
+                    <div class="pair-code" id="pairing-code"></div>
+                    <p class="muted">This code expires in ~60 seconds. The page will auto-refresh status.</p>
+                </div>
+            </div>
+
+            <div class="row-actions">
+                <button id="btn-start" class="btn-ghost">Start bot</button>
+                <button id="btn-stop" class="btn-ghost">Stop bot</button>
+                <button id="btn-logout-bot" class="btn-danger">Unlink WhatsApp</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Settings</h3>
+            <form id="form-settings">
+                <div class="grid">
+                    <label>Bot name <input name="botName" type="text" maxlength="40"></label>
+                    <label>Prefix <input name="prefix" type="text" maxlength="3" placeholder="."></label>
+                    <label>Pairing code label (8 chars) <input name="pairingName" type="text" maxlength="8"></label>
+                </div>
+                <div class="grid">
+                    <label class="check"><input name="public" type="checkbox"> Public mode (anyone can use the bot)</label>
+                    <label class="check"><input name="autoRead" type="checkbox"> Auto-read messages</label>
+                    <label class="check"><input name="autoTyping" type="checkbox"> Auto-typing indicator</label>
+                    <label class="check"><input name="chatbot" type="checkbox"> AI chatbot replies</label>
+                </div>
+                <label>Extra owner numbers (comma separated, international format)
+                    <input name="owners" type="text" placeholder="2547XXXX, 2348XXXX">
+                </label>
+                <button class="btn-primary" type="submit">Save settings</button>
+                <span id="settings-saved" class="form-success hidden">Saved.</span>
+            </form>
+            <p class="muted">Tip: your linked phone number is automatically the owner of your bot — extra owners only need to be added if you want others to control it.</p>
+        </div>
+
+        <div class="card danger">
+            <h3>Danger zone</h3>
+            <button id="btn-delete-account" class="btn-danger">Delete account &amp; bot</button>
+            <p class="muted" style="margin-top:8px">This removes your data &amp; unlinks WhatsApp. To also delete your sign-in identity, use the user menu (top right) → Manage account → Delete account.</p>
+        </div>
+    </section>
+</main>
+
+<script src="/app.js" type="module"></script>
+</body>
+</html>

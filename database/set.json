@@ -1,0 +1,71 @@
+{
+  "settings": {
+    "gconly": false,
+    "autoview": false,
+    "autojoin": false,
+    "antidelete": false,
+    "antiviewonce": false,
+    "antipromote": false,
+    "antidemote": false,
+    "chatbotDM": true,
+    "chatbotGC": false,
+    "autoai_users": []
+  },
+  "stickcmd": {},
+  "groups": {
+    "120363419334995853@g.us": {
+      "antilinkgc": false,
+      "antilinkall": false,
+      "antipromosi": false,
+      "antibadword": false,
+      "antiimage": false,
+      "antivideo": false,
+      "antisticker": false,
+      "welcome": false,
+      "goodbye": false,
+      "mute": false,
+      "bl": []
+    },
+    "120363409439086468@g.us": {
+      "antilinkgc": false,
+      "antilinkall": false,
+      "antipromosi": false,
+      "antibadword": false,
+      "antiimage": false,
+      "antivideo": false,
+      "antisticker": false,
+      "welcome": false,
+      "goodbye": false,
+      "mute": false,
+      "bl": []
+    },
+    "120363426482840387@g.us": {
+      "antilinkgc": false,
+      "antilinkall": false,
+      "antipromosi": false,
+      "antibadword": false,
+      "antiimage": false,
+      "antivideo": false,
+      "antisticker": false,
+      "welcome": false,
+      "goodbye": false,
+      "mute": false,
+      "bl": [],
+      "closetime": 1777484244817,
+      "opentime": 1777484276603
+    }
+  },
+  "warnings": {
+    "120363409439086468@g.us": {
+      "194777421246585@lid": {
+        "count": 1,
+        "reasons": [
+          {
+            "at": 1777457447386,
+            "reason": "no reason"
+          }
+        ]
+      }
+    }
+  }
+}
